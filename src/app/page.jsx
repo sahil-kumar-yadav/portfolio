@@ -2,7 +2,6 @@ import Image from "next/image";
 // 38
 const Homepage = () => {
   return (
-    <>
 
       <div className="h-full flex flex-col sm:px-8 md:px-12 lg:px-20 xl:px-48">
         {/* Image container  */}
@@ -22,13 +21,12 @@ const Homepage = () => {
             my commitment to execellence
           </p>
           {/* Buttons  */}
-          <div className="flex gap-4">
+          <div className="w-full flex gap-4">
             <button className="p-4 rounded-lg ring-1 bg-black text-white">View My Work</button>
             <button className="p-4 rounded-lg ring-1 bg-black" >Contact Me</button>
           </div>
         </div>
       </div>
-    </>
   )
 };
 
