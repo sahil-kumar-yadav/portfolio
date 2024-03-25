@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import NavLink from "./NavLink";
-import {motion} from "framer-motion "
+import { motion } from "framer-motion"
 //50
 
 const links = [
@@ -18,32 +18,56 @@ const links = [
 function Navbar() {
     const [open, setOpen] = useState(false);
 
-    const topVariants={
-        closed:{
-            rotate:0,
+    const topVariants = {
+        closed: {
+            rotate: 0,
         },
-        opened:{
-            rotate:45,
-            backgroundColor:"rgb(255,255,255)"
+        opened: {
+            rotate: 45,
+            backgroundColor: "rgb(255,255,255)"
         }
     }
-    const centerVariants={
-        closed:{
+    const centerVariants = {
+        closed: {
+            opacity: 1,
+        },
+        opened: {
+            opacity: 0
+        }
+    }
+    const bottomVariants = {
+        closed: {
+            rotate: 0,
+        },
+        opened: {
+            rotate: -45,
+            backgroundColor: "rgb(255,255,255)"
+        }
+    };
+
+    const listVarients = {
+        closed: {
+            x: "100vh",
+        },
+        open: {
+            x: 0,
+            transition:{
+                staggerChildren: 0.2,
+            }
+        },
+    };
+
+    const listItemVarients = {
+        closed: {
+            x: -10,
+            opacity:0,
+        },
+        open: {
+            x: 0,
+            when:"beforeChildren",
             opacity:1,
         },
-        opened:{
-            opacity:0        
-        }
-    }
-    const bottomVariants={
-        closed:{
-            rotate:0,
-        },
-        opened:{
-            rotate:-45,
-            backgroundColor:"rgb(255,255,255)"
-        }
-    }
+    };
 
 
     return (
@@ -90,20 +114,23 @@ function Navbar() {
                     className=" w-10 h-8 flex flex-col justify-between z-50 relative"
                     onClick={() => setOpen((prev) => !prev)}
                 >
-                    <motion.div variants={topVariants}    animate={open ?"opened" : "closed"}  className="w-10 h-1 bg-black rounded origin-left"></motion.div>
-                    <motion.div variants={centerVariants} animate={open ?"opened" : "closed"} className="w-10 h-1 bg-black rounded"></motion.div>
-                    <motion.div variants={bottomVariants} animate={open ?"opened" : "closed"} className="w-10 h-1 bg-black rounded origin-left"></motion.div>
+                    <motion.div variants={topVariants} animate={open ? "opened" : "closed"} className="w-10 h-1 bg-black rounded origin-left"></motion.div>
+                    <motion.div variants={centerVariants} animate={open ? "opened" : "closed"} className="w-10 h-1 bg-black rounded"></motion.div>
+                    <motion.div variants={bottomVariants} animate={open ? "opened" : "closed"} className="w-10 h-1 bg-black rounded origin-left"></motion.div>
                 </button>
                 {/* menu list  */}
-                {open && (<div className="absolute top-0 left-0 w-screen h-screen bg-black text-white flex flex-col items-center justify-center gap-8 text-4xl">
-                    {
-                        links.map((link) => (
-                            <Link href={link.url} key={link.title}>{link.title}</Link>
-                        )
-                        )
-                    }
+                {open &&
+                    (<motion.div variants={listVarients} initial="closed" animate="opened" className="absolute top-0 left-0 w-screen h-screen bg-black text-white flex flex-col items-center justify-center gap-8 text-4xl z-40">
+                        {
+                            links.map((link) => (
+                                <motion.div variants={listItemVarients} className="" key={link.title}>
+                                    <Link href={link.url} >{link.title}</Link>
+                                </motion.div>
+                            )
+                            )
+                        }
 
-                </div>)}
+                    </motion.div>)}
 
             </div>
         </div>
